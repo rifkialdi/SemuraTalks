@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SemuraTalks</string>
+    <string name="search_hint">Cari berita langsung</string>
+</resources>
