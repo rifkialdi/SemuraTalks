@@ -1,11 +1,12 @@
 package com.example.semuratalks.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.semuratalks.NewsActivity
 import com.example.semuratalks.R
 import com.example.semuratalks.api.EndpointsItem
 import com.example.semuratalks.databinding.ItemRvdashboardBinding
@@ -29,7 +30,9 @@ class DashboardAdapter(val itemList: ArrayList<DashboardModel>, val linkNews: Ar
             .centerInside()
             .into(holder.binding.idrvImgdashboard)
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, data.platformBerita, Toast.LENGTH_SHORT).show()
+            val intent = Intent(holder.itemView.context, NewsActivity::class.java)
+            intent.putExtra("datanews", linkNews[position])
+            holder.itemView.context.startActivity(intent)
             Log.e("TAG", "onBindViewHolder: ${linkNews[position]}", )
         }
     }

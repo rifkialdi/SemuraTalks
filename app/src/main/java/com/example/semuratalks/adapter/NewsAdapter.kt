@@ -3,9 +3,10 @@ package com.example.semuratalks.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.semuratalks.api.PathsItem
 import com.example.semuratalks.databinding.ItemNewsBinding
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter(val item: List<PathsItem>) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     class NewsViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
@@ -13,10 +14,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.binding.idtvCategory.text = item[position].name
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return item.size
     }
 }
