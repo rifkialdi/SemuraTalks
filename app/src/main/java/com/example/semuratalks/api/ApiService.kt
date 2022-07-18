@@ -10,4 +10,7 @@ interface ApiService {
     fun getAllplatform(
         @Query("q") q: String
     ): Call<Articles>
+
+    @GET("https://api-berita-indonesia.vercel.app/")
+    fun getDataPlatform(): Call<ResponseNews>
 }

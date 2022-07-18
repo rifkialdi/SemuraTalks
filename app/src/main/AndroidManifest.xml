@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".NewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchNewsDetail"
             android:exported="false" />
         <activity

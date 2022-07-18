@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semuratalks.adapter.DashboardAdapter
 import com.example.semuratalks.adapter.SearchAdapter
-import com.example.semuratalks.api.ApiConfig
-import com.example.semuratalks.api.Articles
-import com.example.semuratalks.api.ArticlesItem
+import com.example.semuratalks.api.*
 import com.example.semuratalks.databinding.ActivityMainBinding
 import com.example.semuratalks.model.DashboardModel
 import com.google.android.material.snackbar.Snackbar
@@ -25,13 +23,16 @@ import retrofit2.Response
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var data: ArrayList<EndpointsItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        showPlatform()
+        data = arrayListOf()
+        dataPlatformBerita()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -66,7 +67,7 @@ class DashboardActivity : AppCompatActivity() {
             "Merdeka",
             "Okezone",
             "Republika",
-            "Sindenews",
+            "Sindonews",
             "Suara",
             "Tempo",
             "Tribun"
@@ -91,13 +92,13 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         binding.idrvDashboard.apply {
-            adapter = DashboardAdapter(dataLengkap)
+            adapter = DashboardAdapter(dataLengkap, data)
             layoutManager = GridLayoutManager(this@DashboardActivity, 2)
         }
     }
 
     fun showSearch(value: String) {
-        val retrofit = ApiConfig.getApiService().getAllplatform(value)
+        val retrofit = ApiConfig.getApiService("https://newsapi.org/").getAllplatform(value)
         retrofit.enqueue(object : Callback<Articles> {
             override fun onResponse(call: Call<Articles>, response: Response<Articles>) {
                 if (response.isSuccessful) {
@@ -115,15 +116,43 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     fun showSearchRv(response: Articles) {
-        val data = arrayListOf<ArticlesItem>()
+        val dataSearh = arrayListOf<ArticlesItem>()
 
         for (item in response.articlesItem) {
-            data.add(ArticlesItem(item.sourceItem, item.title, item.url, item.urlToImage))
+            dataSearh.add(ArticlesItem(item.sourceItem, item.title, item.url, item.urlToImage))
         }
         binding.idrvDashboard.apply {
-            adapter = SearchAdapter(this@DashboardActivity, data)
+            adapter = SearchAdapter(this@DashboardActivity, dataSearh)
             layoutManager = LinearLayoutManager(this@DashboardActivity)
         }
+    }
+
+    fun dataPlatformBerita() {
+        val retrofit = ApiConfig.getApiService("https://api-berita-indonesia.vercel.app/").getDataPlatform()
+        retrofit.enqueue(object : Callback<ResponseNews> {
+            override fun onResponse(
+                call: Call<ResponseNews>,
+                response: Response<ResponseNews>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()!!
+
+                    for (index in 0..11) {
+                        if (index !in 3..4) {
+                            data.add(responseBody.endpoints[index])
+                        } else {
+                            false
+                        }
+                    }
+                    showPlatform()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseNews>, t: Throwable) {
+                Snackbar.make(this@DashboardActivity.binding.root, "Kesalahan ${t.message}", Snackbar.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
 }

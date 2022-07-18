@@ -2,24 +2,24 @@ package com.example.semuratalks.api
 
 import com.google.gson.annotations.SerializedName
 // belum kepake
-data class Response(
+data class ResponseNews(
 	@field:SerializedName("endpoints")
 	val endpoints: List<EndpointsItem>
 )
 
 data class EndpointsItem(
-	@field:SerializedName("paths")
-	val paths: List<PathsItem>,
-
 	@field:SerializedName("name")
-	val name: String
+	val name: String,
+
+	@field:SerializedName("paths")
+	val paths: List<PathsItem>
 )
 
 data class PathsItem(
-	@field:SerializedName("path")
-	val path: String,
-
 	@field:SerializedName("name")
-	val name: String
+	val name: String,
+
+	@field:SerializedName("path")
+	val path: String
 )
 
