@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -31,9 +32,9 @@ class DashboardActivity : AppCompatActivity() {
 
         data = arrayListOf()
         dataPlatformBerita()
-
     }
 
+//    Untuk menampilkan UI search bar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_search, menu)
@@ -58,6 +59,7 @@ class DashboardActivity : AppCompatActivity() {
         return true
     }
 
+//    Untuk menampilkan pilihan sumber berita
     fun showPlatform() {
         val berita = arrayListOf(
             "Antara",
@@ -96,6 +98,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+//    Untuk menampilkan data json dari search bar
     fun showSearch(value: String) {
         val retrofit = ApiConfig.getApiService("https://newsapi.org/").getAllplatform(value)
         retrofit.enqueue(object : Callback<Articles> {
@@ -114,6 +117,8 @@ class DashboardActivity : AppCompatActivity() {
         })
     }
 
+
+//    Untuk membuat recyclerview dari data json Search
     fun showSearchRv(response: Articles) {
         val dataSearh = arrayListOf<ArticlesItem>()
 
@@ -126,6 +131,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+//    Untuk menampilkan data json dari pilihan sumber berita
     fun dataPlatformBerita() {
         val retrofit = ApiConfig.getApiService("https://api-berita-indonesia.vercel.app/").getDataPlatform()
         retrofit.enqueue(object : Callback<ResponseNews> {
@@ -150,7 +156,6 @@ class DashboardActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseNews>, t: Throwable) {
                 Snackbar.make(this@DashboardActivity.binding.root, "Kesalahan ${t.message}", Snackbar.LENGTH_SHORT).show()
             }
-
         })
     }
 

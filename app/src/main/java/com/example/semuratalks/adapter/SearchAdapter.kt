@@ -25,7 +25,7 @@ class SearchAdapter(val context: Context, val itemSearch: ArrayList<ArticlesItem
         holder.binding.idtvTitle.text = data.title
         Glide.with(holder.itemView)
             .load(data.urlToImage)
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.loading)
             .centerInside()
             .into(holder.binding.idrvImgsearch)
 

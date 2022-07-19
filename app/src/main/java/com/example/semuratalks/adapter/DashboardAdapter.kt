@@ -33,7 +33,6 @@ class DashboardAdapter(val itemList: ArrayList<DashboardModel>, val linkNews: Ar
             val intent = Intent(holder.itemView.context, NewsActivity::class.java)
             intent.putExtra("datanews", linkNews[position])
             holder.itemView.context.startActivity(intent)
-            Log.e("TAG", "onBindViewHolder: ${linkNews[position]}", )
         }
     }
 
