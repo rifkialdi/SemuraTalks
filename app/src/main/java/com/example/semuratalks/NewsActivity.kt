@@ -3,6 +3,7 @@ package com.example.semuratalks
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,8 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val getDataNews = intent.getParcelableExtra<EndpointsItem>("datanews") as EndpointsItem
         val kategori = getDataNews.paths
 
@@ -39,6 +42,13 @@ class NewsActivity : AppCompatActivity() {
             })
         }
         showDefaultCategoryNews(getDataNews.name, getDataNews.paths[0].name)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun showDefaultCategoryNews(platform: String, category: String) {

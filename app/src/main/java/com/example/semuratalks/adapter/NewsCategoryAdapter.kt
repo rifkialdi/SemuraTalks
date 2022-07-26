@@ -29,7 +29,6 @@ class NewsCategoryAdapter(val item: DataItem) : RecyclerView.Adapter<NewsCategor
             .into(holder.binding.idrvImgsearch)
 
         holder.itemView.setOnClickListener {
-            Log.e("TAG", "onBindViewHolder: ${data.link}", )
             val intent = Intent(holder.itemView.context, NewsDetailActivity::class.java)
             intent.putExtra("URL", data.link)
             holder.itemView.context.startActivity(intent)

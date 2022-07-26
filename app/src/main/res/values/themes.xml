@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.SemuraTalks" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimary">@color/orangesec</item>
         <item name="colorPrimaryVariant">@color/orangesec</item>
         <item name="colorOnPrimary">@color/yellow</item>
         <!-- Secondary brand color. -->

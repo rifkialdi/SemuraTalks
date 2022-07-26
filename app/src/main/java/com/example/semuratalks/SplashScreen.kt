@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import com.example.semuratalks.databinding.ActivitySplashScreenBinding
 
 class SplashScreen : AppCompatActivity() {
@@ -17,9 +18,11 @@ class SplashScreen : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.hide()
+
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
+            binding.idprogressbar.visibility = View.INVISIBLE
             finish()
         },2000)
     }
