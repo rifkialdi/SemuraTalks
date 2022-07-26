@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,6 +25,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var data: ArrayList<EndpointsItem>
+    var validateBack = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,7 @@ class DashboardActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                binding.idprogressbar.visibility = View.VISIBLE
                 showSearch(query)
                 searchView.clearFocus()
                 return true
@@ -95,6 +98,7 @@ class DashboardActivity : AppCompatActivity() {
         binding.idrvDashboard.apply {
             adapter = DashboardAdapter(dataLengkap, data)
             layoutManager = GridLayoutManager(this@DashboardActivity, 2)
+            binding.idprogressbar.visibility = View.GONE
         }
     }
 
@@ -107,6 +111,8 @@ class DashboardActivity : AppCompatActivity() {
                     Toast.makeText(this@DashboardActivity, value, Toast.LENGTH_SHORT).show()
                     val responseBody = response.body()
                     showSearchRv(responseBody!!)
+                    validateBack = true
+                    binding.idprogressbar.visibility = View.GONE
                 }
             }
 
@@ -115,6 +121,17 @@ class DashboardActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onBackPressed() {
+        if (validateBack) {
+            binding.idprogressbar.visibility = View.VISIBLE
+            dataPlatformBerita()
+            validateBack = false
+        } else {
+            super.onBackPressed()
+        }
+
     }
 
 

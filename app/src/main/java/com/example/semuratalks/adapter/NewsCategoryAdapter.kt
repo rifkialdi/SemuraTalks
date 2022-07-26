@@ -1,9 +1,12 @@
 package com.example.semuratalks.adapter
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.semuratalks.NewsDetailActivity
 import com.example.semuratalks.R
 import com.example.semuratalks.api.DataItem
 import com.example.semuratalks.databinding.ItemSearchBinding
@@ -18,11 +21,19 @@ class NewsCategoryAdapter(val item: DataItem) : RecyclerView.Adapter<NewsCategor
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val data = item.posts[position]
         holder.binding.idtvTitle.text = data.title
+
         Glide.with(holder.itemView)
             .load(data.thumbnail)
             .placeholder(R.drawable.loading)
-            .centerInside()
+            .centerCrop()
             .into(holder.binding.idrvImgsearch)
+
+        holder.itemView.setOnClickListener {
+            Log.e("TAG", "onBindViewHolder: ${data.link}", )
+            val intent = Intent(holder.itemView.context, NewsDetailActivity::class.java)
+            intent.putExtra("URL", data.link)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

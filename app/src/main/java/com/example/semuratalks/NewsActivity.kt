@@ -3,6 +3,8 @@ package com.example.semuratalks
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.semuratalks.adapter.NewsAdapter
 import com.example.semuratalks.adapter.NewsCategoryAdapter
@@ -27,12 +29,15 @@ class NewsActivity : AppCompatActivity() {
         val getDataNews = intent.getParcelableExtra<EndpointsItem>("datanews") as EndpointsItem
         val kategori = getDataNews.paths
 
-        supportActionBar?.title = getDataNews.name
-
         binding.idrvCategorynews.apply {
-            adapter = NewsAdapter(kategori)
+            adapter = NewsAdapter(kategori, object : NewsAdapter.OnItemClickCallback {
+                override fun onClick(name: String) {
+                    binding.idprogressbar.visibility = View.VISIBLE
+                    Toast.makeText(this@NewsActivity, name, Toast.LENGTH_SHORT).show()
+                    showDefaultCategoryNews(getDataNews.name, name)
+                }
+            })
         }
-        Log.e("TAG", "onCreate: ${getDataNews.name} ${getDataNews.paths[0].name}", )
         showDefaultCategoryNews(getDataNews.name, getDataNews.paths[0].name)
     }
 
@@ -45,13 +50,13 @@ class NewsActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()!!
-                    Log.e("TAG", "onResponse: $responseBody", )
                     showListItemNews(responseBody)
+                    supportActionBar?.title = responseBody.data.title
+                    binding.idprogressbar.visibility = View.GONE
                 }
             }
 
             override fun onFailure(call: Call<ResponseNewsCategory>, t: Throwable) {
-                Log.e("TAG", "onFailure: ${t.message}", )
             }
         })
     }
