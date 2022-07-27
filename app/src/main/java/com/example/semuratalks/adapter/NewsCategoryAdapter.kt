@@ -33,6 +33,14 @@ class NewsCategoryAdapter(val item: DataItem) : RecyclerView.Adapter<NewsCategor
             intent.putExtra("URL", data.link)
             holder.itemView.context.startActivity(intent)
         }
+
+        holder.binding.idimgbtnShare.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, data.link)
+            intent.type = "text/plain"
+            holder.itemView.context.startActivity(Intent.createChooser(intent,"Share To: "))
+        }
     }
 
     override fun getItemCount(): Int {

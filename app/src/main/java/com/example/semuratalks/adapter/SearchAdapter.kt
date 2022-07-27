@@ -36,6 +36,14 @@ class SearchAdapter(val context: Context, val itemSearch: ArrayList<ArticlesItem
             intent.putExtra("URL", data.url)
             context.startActivity(intent)
         }
+
+        holder.binding.idimgbtnShare.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, data.url)
+            intent.type = "text/plain"
+            holder.itemView.context.startActivity(Intent.createChooser(intent,"Share To: "))
+        }
     }
 
     override fun getItemCount(): Int {
