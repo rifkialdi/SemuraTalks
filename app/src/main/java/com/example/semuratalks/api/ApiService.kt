@@ -7,7 +7,7 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface ApiService {
-    @GET("v2/top-headlines?country=id&apiKey=96a6673127324ac78cf038734d996152")
+    @GET("v2/everything?language=id&apiKey=96a6673127324ac78cf038734d996152")
     fun getAllplatform(
         @Query("q") q: String
     ): Call<Articles>

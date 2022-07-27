@@ -25,7 +25,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/idrv_news"/>
+        android:id="@+id/idrv_news"
+        tools:listitem="@layout/item_search"/>
 
     <ProgressBar
         android:id="@+id/idprogressbar"

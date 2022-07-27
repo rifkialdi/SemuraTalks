@@ -22,7 +22,6 @@ class NewsDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         getUrl = intent.getStringExtra("URL")!!
-        Log.e("TAG", "onCreate: $getUrl", )
         binding.idwebviewdetail.loadUrl(getUrl)
     }
 
