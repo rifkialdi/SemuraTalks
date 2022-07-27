@@ -24,6 +24,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:indeterminateTint="@color/orange"
+        android:indeterminateTint="@color/white"
         android:id="@+id/idprogressbar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

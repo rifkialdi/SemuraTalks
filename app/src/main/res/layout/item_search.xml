@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardElevation="5dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="15dp"
+        android:backgroundTint="@color/orangesec">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,6 +35,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/idrv_imgsearch"
                 tools:text="Bolasport.com" />
@@ -44,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:padding="2dp"
+                android:textColor="@color/white"
                 android:layout_marginBottom="5dp"
                 android:textAlignment="center"
                 android:textSize="18sp"

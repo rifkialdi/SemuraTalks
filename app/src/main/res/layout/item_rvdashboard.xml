@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:cardElevation="4dp"
         android:layout_margin="5dp"
-        android:backgroundTint="@color/orangesec">
+        android:backgroundTint="@color/orange">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,6 +31,7 @@
                 android:id="@+id/idtv_dashboard"
                 android:layout_width="wrap_content"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/idrv_imgdashboard"
                 app:layout_constraintStart_toStartOf="@+id/idrv_imgdashboard"
