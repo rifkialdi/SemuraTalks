@@ -26,12 +26,13 @@ class DashboardAdapter(val itemList: ArrayList<DashboardModel>, val linkNews: Ar
         holder.binding.idtvDashboard.text = data.platformBerita
         Glide.with(holder.itemView)
             .load(data.image)
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.loading)
             .centerInside()
             .into(holder.binding.idrvImgdashboard)
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, NewsActivity::class.java)
             intent.putExtra("datanews", linkNews[position])
+            intent.putExtra("gambar", data.image)
             holder.itemView.context.startActivity(intent)
         }
     }

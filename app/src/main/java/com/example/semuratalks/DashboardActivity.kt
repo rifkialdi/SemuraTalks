@@ -48,6 +48,7 @@ class DashboardActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                binding.idtvTidakada.visibility = View.GONE
                 binding.idprogressbar.visibility = View.VISIBLE
                 showSearch(query)
                 searchView.clearFocus()
@@ -126,6 +127,7 @@ class DashboardActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (validateBack) {
             binding.idprogressbar.visibility = View.VISIBLE
+            binding.idtvTidakada.visibility = View.GONE
             dataPlatformBerita()
             validateBack = false
         } else {
@@ -142,9 +144,18 @@ class DashboardActivity : AppCompatActivity() {
         for (item in response.articlesItem) {
             dataSearh.add(ArticlesItem(item.sourceItem, item.title, item.url, item.urlToImage))
         }
-        binding.idrvDashboard.apply {
-            adapter = SearchAdapter(this@DashboardActivity, dataSearh)
-            layoutManager = LinearLayoutManager(this@DashboardActivity)
+
+        if (dataSearh.size != 0) {
+            binding.idrvDashboard.apply {
+                adapter = SearchAdapter(this@DashboardActivity, dataSearh)
+                layoutManager = LinearLayoutManager(this@DashboardActivity)
+            }
+        } else {
+            binding.idrvDashboard.apply {
+                layoutManager = LinearLayoutManager(this@DashboardActivity)
+                adapter = SearchAdapter(this@DashboardActivity, arrayListOf<ArticlesItem>())
+            }
+            binding.idtvTidakada.visibility = View.VISIBLE
         }
     }
 

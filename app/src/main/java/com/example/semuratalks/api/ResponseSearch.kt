@@ -18,7 +18,7 @@ data class ArticlesItem(
 	val url: String,
 
 	@field:SerializedName("urlToImage")
-	val urlToImage: String,
+	val urlToImage: String?,
 )
 
 data class SourceItem(

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.semuratalks.adapter.NewsAdapter
 import com.example.semuratalks.adapter.NewsCategoryAdapter
 import com.example.semuratalks.api.ApiConfig
@@ -28,10 +29,17 @@ class NewsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
 
         val getDataNews = intent.getParcelableExtra<EndpointsItem>("datanews") as EndpointsItem
-        val kategori = getDataNews.paths
+        val getImage = intent.getStringExtra("gambar")
 
+        Glide.with(this)
+            .load(getImage)
+            .centerInside()
+            .into(binding.idimg)
+
+        val kategori = getDataNews.paths
         binding.idrvCategorynews.apply {
             adapter = NewsAdapter(kategori, object : NewsAdapter.OnItemClickCallback {
                 override fun onClick(name: String) {
@@ -42,6 +50,10 @@ class NewsActivity : AppCompatActivity() {
             })
         }
         showDefaultCategoryNews(getDataNews.name, getDataNews.paths[0].name)
+
+        binding.idimgBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
