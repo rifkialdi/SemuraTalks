@@ -66,28 +66,28 @@ class DashboardActivity : AppCompatActivity() {
 //    Untuk menampilkan pilihan sumber berita
     fun showPlatform() {
         val berita = arrayListOf(
-            "Antara",
-            "Cnbc",
-            "Cnn",
-            "Merdeka",
-            "Okezone",
-            "Republika",
-            "Sindonews",
-            "Suara",
-            "Tempo",
-            "Tribun"
+            "ANTARA NEWS",
+            "CNBC",
+            "CNN Indonesia",
+            "merdeka.com",
+            "okezone.com",
+            "REPUBLIKA.co.id",
+            "SINDONEWS.com",
+            "suara.com",
+            "tempo.co",
+            "Tribunnews.com"
         )
 
         val gambarBerita = arrayListOf(
             "https://www.antaranews.com/img/antaranews.com.png",
-            "https://cdn.cnbcindonesia.com/cnbc/images/logo_hitam.png",
+            "https://firebasestorage.googleapis.com/v0/b/logo-1e078.appspot.com/o/cnbc.png?alt=media&token=2b05cbf1-022f-4411-bab5-beb040818cbb",
             "https://cdn.cnnindonesia.com/cnnid/images/logo_cnn_fav.png",
             "https://cdns.klimg.com/merdeka.com/media/i/a/logo.png",
             "https://cdn.okezone.com/underwood/revamp/2020/img/xokezone2020.png.pagespeed.ic.o1H1D1nrFk.png",
             "https://static.republika.co.id/files/images/logo.png",
             "https://sm.sindonews.net/mobile/2016/images/sindonews-480.png",
             "https://assets.suara.com/desktop/images/new-images/logo_suara.png",
-            "https://www.tempo.co/images/logo-tempo.png",
+            "https://firebasestorage.googleapis.com/v0/b/logo-1e078.appspot.com/o/tempo.png?alt=media&token=54ae5635-d8ba-4367-b57f-f0efe87f409f",
             "https://cdn-1.tstatic.net/img/logo/tribun/png/tribunnews.png"
         )
 
@@ -133,7 +133,6 @@ class DashboardActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
-
     }
 
 
