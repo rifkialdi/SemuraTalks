@@ -28,7 +28,6 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.hide()
 
         val getDataNews = intent.getParcelableExtra<EndpointsItem>("datanews") as EndpointsItem
@@ -73,7 +72,6 @@ class NewsActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()!!
                     showListItemNews(responseBody)
-                    supportActionBar?.title = responseBody.data.title
                     binding.idprogressbar.visibility = View.GONE
                 }
             }

@@ -63,7 +63,77 @@ class DashboardActivity : AppCompatActivity() {
         return true
     }
 
-//    Untuk menampilkan pilihan sumber berita
+//    Untuk menampilkan data json dari search bar
+    fun showSearch(value: String) {
+        val retrofit = ApiConfig.getApiService("https://newsapi.org/").getAllplatform(value)
+        retrofit.enqueue(object : Callback<Articles> {
+            override fun onResponse(call: Call<Articles>, response: Response<Articles>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@DashboardActivity, value, Toast.LENGTH_SHORT).show()
+                    val responseBody = response.body()
+                    showSearchRv(responseBody!!)
+                    validateBack = true
+                    binding.idprogressbar.visibility = View.GONE
+                }
+            }
+
+            override fun onFailure(call: Call<Articles>, t: Throwable) {
+                Snackbar.make(this@DashboardActivity.binding.root, "Kesalahan ${t.message}", Snackbar.LENGTH_SHORT).show()
+            }
+        })
+    }
+    
+//    Untuk membuat recyclerview dari data json Search
+    fun showSearchRv(response: Articles) {
+        val dataSearh = arrayListOf<ArticlesItem>()
+
+        for (item in response.articlesItem) {
+            dataSearh.add(ArticlesItem(item.sourceItem, item.title, item.url, item.urlToImage))
+        }
+
+        if (dataSearh.size != 0) {
+            binding.idrvDashboard.apply {
+                adapter = SearchAdapter(this@DashboardActivity, dataSearh)
+                layoutManager = LinearLayoutManager(this@DashboardActivity)
+            }
+        } else {
+            binding.idrvDashboard.apply {
+                adapter = SearchAdapter(this@DashboardActivity, arrayListOf<ArticlesItem>())
+                layoutManager = LinearLayoutManager(this@DashboardActivity)
+            }
+            binding.idtvTidakada.visibility = View.VISIBLE
+        }
+    }
+
+//    Untuk menampilkan data json dari pilihan sumber berita
+    fun dataPlatformBerita() {
+        val retrofit = ApiConfig.getApiService("https://api-berita-indonesia.vercel.app/").getDataPlatform()
+        retrofit.enqueue(object : Callback<ResponseNews> {
+            override fun onResponse(
+                call: Call<ResponseNews>,
+                response: Response<ResponseNews>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()!!
+
+                    for (index in 0..11) {
+                        if (index !in 3..4) {
+                            data.add(responseBody.endpoints[index])
+                        } else {
+                            false
+                        }
+                    }
+                    showPlatform()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseNews>, t: Throwable) {
+                Snackbar.make(this@DashboardActivity.binding.root, "Kesalahan ${t.message}", Snackbar.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    //    Untuk menampilkan pilihan sumber berita
     fun showPlatform() {
         val berita = arrayListOf(
             "ANTARA NEWS",
@@ -103,27 +173,6 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-//    Untuk menampilkan data json dari search bar
-    fun showSearch(value: String) {
-        val retrofit = ApiConfig.getApiService("https://newsapi.org/").getAllplatform(value)
-        retrofit.enqueue(object : Callback<Articles> {
-            override fun onResponse(call: Call<Articles>, response: Response<Articles>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@DashboardActivity, value, Toast.LENGTH_SHORT).show()
-                    val responseBody = response.body()
-                    showSearchRv(responseBody!!)
-                    validateBack = true
-                    binding.idprogressbar.visibility = View.GONE
-                }
-            }
-
-            override fun onFailure(call: Call<Articles>, t: Throwable) {
-                Snackbar.make(this@DashboardActivity.binding.root, "Kesalahan ${t.message}", Snackbar.LENGTH_SHORT).show()
-            }
-
-        })
-    }
-
     override fun onBackPressed() {
         if (validateBack) {
             binding.idprogressbar.visibility = View.VISIBLE
@@ -133,57 +182,6 @@ class DashboardActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
-    }
-
-
-//    Untuk membuat recyclerview dari data json Search
-    fun showSearchRv(response: Articles) {
-        val dataSearh = arrayListOf<ArticlesItem>()
-
-        for (item in response.articlesItem) {
-            dataSearh.add(ArticlesItem(item.sourceItem, item.title, item.url, item.urlToImage))
-        }
-
-        if (dataSearh.size != 0) {
-            binding.idrvDashboard.apply {
-                adapter = SearchAdapter(this@DashboardActivity, dataSearh)
-                layoutManager = LinearLayoutManager(this@DashboardActivity)
-            }
-        } else {
-            binding.idrvDashboard.apply {
-                layoutManager = LinearLayoutManager(this@DashboardActivity)
-                adapter = SearchAdapter(this@DashboardActivity, arrayListOf<ArticlesItem>())
-            }
-            binding.idtvTidakada.visibility = View.VISIBLE
-        }
-    }
-
-//    Untuk menampilkan data json dari pilihan sumber berita
-    fun dataPlatformBerita() {
-        val retrofit = ApiConfig.getApiService("https://api-berita-indonesia.vercel.app/").getDataPlatform()
-        retrofit.enqueue(object : Callback<ResponseNews> {
-            override fun onResponse(
-                call: Call<ResponseNews>,
-                response: Response<ResponseNews>
-            ) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()!!
-
-                    for (index in 0..11) {
-                        if (index !in 3..4) {
-                            data.add(responseBody.endpoints[index])
-                        } else {
-                            false
-                        }
-                    }
-                    showPlatform()
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseNews>, t: Throwable) {
-                Snackbar.make(this@DashboardActivity.binding.root, "Kesalahan ${t.message}", Snackbar.LENGTH_SHORT).show()
-            }
-        })
     }
 
 }
