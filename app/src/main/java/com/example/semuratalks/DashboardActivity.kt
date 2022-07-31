@@ -51,12 +51,14 @@ class DashboardActivity : AppCompatActivity() {
                 binding.idtvTidakada.visibility = View.GONE
                 binding.idprogressbar.visibility = View.VISIBLE
                 showSearch(query)
+                Toast.makeText(this@DashboardActivity, query, Toast.LENGTH_SHORT).show()
                 searchView.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                return false
+                showSearch(newText)
+                return true
             }
         })
 
@@ -69,7 +71,6 @@ class DashboardActivity : AppCompatActivity() {
         retrofit.enqueue(object : Callback<Articles> {
             override fun onResponse(call: Call<Articles>, response: Response<Articles>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@DashboardActivity, value, Toast.LENGTH_SHORT).show()
                     val responseBody = response.body()
                     showSearchRv(responseBody!!)
                     validateBack = true
@@ -95,6 +96,7 @@ class DashboardActivity : AppCompatActivity() {
             binding.idrvDashboard.apply {
                 adapter = SearchAdapter(this@DashboardActivity, dataSearh)
                 layoutManager = LinearLayoutManager(this@DashboardActivity)
+                binding.idtvTidakada.visibility = View.GONE
             }
         } else {
             binding.idrvDashboard.apply {

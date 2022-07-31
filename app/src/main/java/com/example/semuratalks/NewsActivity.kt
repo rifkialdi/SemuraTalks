@@ -15,6 +15,7 @@ import com.example.semuratalks.api.EndpointsItem
 import com.example.semuratalks.api.ResponseNews
 import com.example.semuratalks.api.ResponseNewsCategory
 import com.example.semuratalks.databinding.ActivityNewsBinding
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,6 +78,7 @@ class NewsActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseNewsCategory>, t: Throwable) {
+                Snackbar.make(this@NewsActivity.binding.root, "Kesalahan ${t.message}", Snackbar.LENGTH_SHORT).show()
             }
         })
     }
