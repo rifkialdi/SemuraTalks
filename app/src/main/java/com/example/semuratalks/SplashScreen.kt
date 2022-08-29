@@ -25,5 +25,7 @@ class SplashScreen : AppCompatActivity() {
             binding.idprogressbar.visibility = View.INVISIBLE
             finish()
         },2000)
+
+        //tes perubahan
     }
 }
